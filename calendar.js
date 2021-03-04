@@ -16,13 +16,13 @@ class Calendar{
         return JSON.parse(localStorage[this.tableId]);
     }
 
-    renderCalender(){
-        let thead = this.days.
+    render_Calendar(){
+        let t_head = this.days.
         map(function(day){
             return `<th>${day}</th>`;
         });
 
-        let tbody = [];
+        let t_body = [];
 
         for(let i=this.hours.start; i<=this.hours.end; i++){
             //console.log(i);
@@ -33,23 +33,23 @@ class Calendar{
                 .join('');
 
             let tr = `<tr><td>${i}:00</td>${tds}</tr>`;
-            tbody.push(tr);
+            t_body.push(tr);
             //console.log(tr);
         }
 
-        let table = `<table id='${this.tableId}'>
+        let table = `<table id='${this.table_Id}'>
 			<thead>
 				<th>Name</th>
-				${thead.join('')}
+				${t_head.join('')}
 			</thead>
 			<tbody>
-				${tbody.join('')}
+				${t_body.join('')}
 			</tbody>
 		</table>`;
 
         let meeting_room = document.querySelector('#meeting_room');
 
-        meetingRoom.innerHTML += table;
+        meeting_room.innerHTML += table;
     }
 
     static infoCalendar(calendar,data){
@@ -246,7 +246,7 @@ let calendarsData = {
 
 for(let calendar in calendars){
     calendars[calendar].data = calendarsData[calendar];
-    calendars[calendar].renderCalender();
+    calendars[calendar].render_Calendar();
     Calendar.infoCalendar(calendars[calendar]);
     //console.log(calendars[calendar]);
 }
