@@ -135,42 +135,89 @@ class Calendar{
         }
     }
 
-    renderEvent(event){
-        console.log(event);
+    static emptyTDs(tds){
+        tds.forEach(function(td){
+            td.innerHTML = '';
+        })
+    }
 
-        let eventDiv = document.createElement('div');
-        eventDiv.classList.add('event');
-        eventDiv.style.backgroundColor = this.eventColor;
+    render_Users(parentElement){
 
-        let cancelBtn = document.createElement('button');
-        cancelBtn.classList.add('event__cancel');
-        cancelBtn.innerHTML = `x`;
-        //cancelBtn.addEventListener('click',this.cancelEvent);
+        let calendarInfo = this.data;
+        //console.log(calendarInfo);
 
-        let name = document.createElement('p');
-        name.classList.add('event__name');
-        name.innerHTML = `<b>${event.name}</b>`;
+        let users = [];
 
-        let users = document.createElement('p');
-        users.classList.add('event__users');
-        users.innerHTML = event.users.join(', ');
+        for(let key in calendarInfo){
+            let day = calendarInfo[key];
+            //console.log(day);
 
-        eventDiv.append(name, users, cancelBtn);
+            for(let hour in day){
+                users.push(day[hour].users);
+            }
+        }
 
+        let all_users = users
+            .flat()
+            .filter(function(value, index, self) {
+                return self.indexOf(value) === index;
+            })
+            .map(function(user){
+                return `<option value="${user}">${user}</option>`;
+            });
+
+        all_users.unshift('<option value="all">All users</option>');
+        //console.log(all_users);
+
+        let select = document.createElement('select');
+        select.dataset.name = "usersSelect";
+        select.dataset.id = this.table_Id;
+        select.innerHTML = all_users.join('');
+
+        return select;
+    }
+
+    static userEvents(select){
+        let userSelected = select.value,
+            table_Id = select.dataset.id
+        //console.log(userSelected,table_Id);
+
+        let data = JSON.parse(localStorage[table_Id]);
+        //console.log(data);
+
+        if(userSelected !== 'all'){
+            for(let key in data){
+                let day = data[key];
+                //console.log(day);
+                for(let hour in day){
+                    //console.log(day[hour]);
+                    let hourEvent = day[hour];
+                    if(!hourEvent.users.includes(userSelected)){
+                        day[hour] = null
+                    }
+                }
+            }
+        }
+
+        Calendar.infoCalendar(calendars[table_Id],data);
+    }
+
+    static renderEvent(event,calendar){
+        let eventDiv = `<div class="event" style="background-color: ${calendar.eventColor}">
+			<p class="event__name"><b>${event.name}</b></p>
+		    <p class="event__users">${event.users.join(', ')}</p>
+			<button id="${generate_ID()}" class="event__cancel">x</button>
+		</div>`;
         return eventDiv;
     }
 
-    static cancelEvent(cancelBtn){
-        // let currentTD = cancelBtn.parentElement.parentElement;
-        let currentTD = cancelBtn.closest('td'),
-            currentTDid = currentTD.dataset.id,
-            table = currentTD.closest('table'),
+    static cancelEvent(cancel_Btn){
+        let current_TD = cancel_Btn.closest('td'),
+            current_TD_id = current_TD.dataset.id,
+            table = current_TD.closest('table'),
             tableId = table.id;
-        console.log(tableId);
-        //console.dir(currentTDid);
 
-        let data = currentTDid.split('-');
-        //console.log(data);
+        let data = current_TD_id.split('-');
 
         let day = data[0],
             hour = data[1];
@@ -179,10 +226,9 @@ class Calendar{
         delete calendar[day][hour];
         localStorage[tableId] = JSON.stringify(calendar);
 
-        currentTD.innerHTML = ``;
+        current_TD.innerHTML = ``;
     }
 }
-
 let roomGreen = new Calendar('roomGreen',['monday','tuesday','friday'],{start: 10,end: 18},'green');
 roomGreen.data = dataGreenRoom;
 // console.log(roomGreen);
