@@ -170,6 +170,13 @@ class Calendar{
         current_TD.innerHTML = ``;
     }
 }
+let calendars = {
+    roomGreen: new Calendar('roomGreen',['monday','tuesday','wednesday','thursday','friday'],{start: 10,end: 18},'#62d44d'),
+    //roomRed: new Calendar('roomRed',['monday','tuesday','wednesday','thursday','friday'],{start: 10,end: 18},'#a41b28'),
+    //roomPurple: new Calendar('roomPurple',['monday','tuesday','wednesday','thursday','friday'],{start: 10,end: 18},'#781e77')
+}
+
+
 let calendarsData = {
     roomGreen: {
 
@@ -236,24 +243,42 @@ let calendarsData = {
     //     }
     // }
 }
+
 for(let calendar in calendars){
     calendars[calendar].data = calendarsData[calendar];
-    calendars[calendar].render_Calendar();
+    calendars[calendar].renderCalender();
     Calendar.infoCalendar(calendars[calendar]);
     //console.log(calendars[calendar]);
 }
 
 //console.log(calendars);
 
-let cancelBTNs = document.querySelectorAll('.event__cancel');
+function generate_ID(length=10) {
+    let result = '',
+        characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',
+        characters_length = characters.length;
 
-cancelBTNs.forEach(function(btn){
-    btn.addEventListener('click',function(){
-        Calendar.cancelEvent(btn);
-    })
-})
+    for (var i = 0; i < length; i++ ) {
+        result += characters.charAt(Math.floor(Math.random() * characters_length));
+    }
+    return result;
+}
 
+let cancelBtns = document.querySelectorAll(`.event__cancel`);
+cancelBtns
+    .forEach(function(btn){
+        btn.addEventListener('click',function(){
+            Calendar.cancelEvent(btn);
+        });
+    });
 
+let selectUsers = document.querySelectorAll(`select[data-name="usersSelect"]`);
+selectUsers
+    .forEach(function(select){
+        select.addEventListener('change',function(){
+            Calendar.userEvents(select);
+        });
+    });
 
 
 
