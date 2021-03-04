@@ -1,62 +1,3 @@
-const dataGreenRoom = {
-    monday:
-        {
-            10: {
-                name: 'Daily Meeting',
-                users: ['Anna', 'Ivan']
-            },
-            18: {
-                name: 'Scrum Meeting',
-                users: ['Anna', 'Oleg']
-            }
-        }
-    ,
-    friday: {
-        13: {
-            name: 'Grooming',
-            users: ['Irina', 'Ivan']
-        },
-        18:
-            {
-                name: 'Scrum Meeting',
-                users: ['Anna', 'Irina']
-            }
-    }
-};
-
-const dataRedRoom = {
-    wednesday:
-        {
-            10: {
-                name: 'Daily Meeting',
-                users: ['Anna', 'Ivan']
-            },
-            18: {
-                name: 'Scrum Meeting',
-                users: ['Anna', 'Oleg']
-            }
-        }
-    ,
-    thursday: {
-        13: {
-            name: 'Grooming',
-            users: ['Irina', 'Ivan']
-        },
-        18:
-            {
-                name: 'Scrum Meeting',
-                users: ['Anna', 'Irina']
-            }
-    }
-};
-
-const days = ['monday','tuesday','wednesday','thursday','friday'];
-const mettingHours = {
-    start: 10,
-    end: 18
-}
-
-
 class Calendar{
     constructor(tableId,days=[],hours={},eventColor){
         this.tableId = tableId;
@@ -229,18 +170,72 @@ class Calendar{
         current_TD.innerHTML = ``;
     }
 }
-let roomGreen = new Calendar('roomGreen',['monday','tuesday','friday'],{start: 10,end: 18},'green');
-roomGreen.data = dataGreenRoom;
-// console.log(roomGreen);
-roomGreen.renderCalender();
-roomGreen.infoCalendar();
+let calendarsData = {
+    roomGreen: {
 
-
-let roomRed = new Calendar('roomRed',['wednesday','thursday',],{start: 9,end: 20},'red');
-roomRed.data = dataRedRoom;
-// console.log(roomRed);
-roomRed.renderCalender();
-roomRed.infoCalendar();
+        monday:
+            {
+                10: {
+                    name: 'Daily Meeting',
+                    users: ['Anna', 'Ivan']
+                },
+                18: {
+                    name: 'Scrum Meeting',
+                    users: ['Anna', 'Oleg']
+                }
+            }
+        ,
+        friday: {
+            13: {
+                name: 'Grooming',
+                users: ['Irina', 'Ivan']
+            },
+            18:
+                {
+                    name: 'Scrum Meeting',
+                    users: ['Anna', 'Irina']
+                }
+        }
+    },
+    // roomRed: {
+    //     friday: {
+    //         10: {
+    //             name: 'Grooming',
+    //             users: ['Irina', 'Ivan']
+    //         },
+    //         13:
+    //             {
+    //                 name: 'Scrum Meeting',
+    //                 users: ['Anna', 'Irina']
+    //             }
+    //     }
+    // },
+    // roomPurple: {
+    //     monday:
+    //         {
+    //             12: {
+    //                 name: 'Daily Meeting',
+    //                 users: ['Anna', 'Ivan']
+    //             },
+    //             13: {
+    //                 name: 'Scrum Meeting',
+    //                 users: ['Anna', 'Oleg']
+    //             }
+    //         }
+    //     ,
+    //     wednesday: {
+    //         10: {
+    //             name: 'Grooming',
+    //             users: ['Irina', 'Ivan']
+    //         },
+    //         16:
+    //             {
+    //                 name: 'Scrum Meeting',
+    //                 users: ['Anna', 'Irina']
+    //             }
+    //     }
+    // }
+}
 
 let cancelBTNs = document.querySelectorAll('.event__cancel');
 
@@ -249,6 +244,19 @@ cancelBTNs.forEach(function(btn){
         Calendar.cancelEvent(btn);
     })
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // class myFunctions{
