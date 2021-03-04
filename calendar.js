@@ -106,24 +106,31 @@ class Calendar{
 			</tbody>
 		</table>`;
 
-        let meetingRoom = document.querySelector('#meetingRoom');
+        let meeting_room = document.querySelector('#meeting_room');
+
         meetingRoom.innerHTML += table;
     }
 
-    infoCalendar(){
-        let calendarInfo = this.data;
+    static infoCalendar(calendar,data){
+        let calendarInfo = data ? data : calendar.data;
         //console.log(calendarInfo);
+
+        let table = document.querySelector(`#${calendar.table_Id}`),
+            tds = table.querySelectorAll('td:nth-child(n+2)');
+
+        Calendar.emptyTDs(tds);
 
         for(let key in calendarInfo){
             let day = calendarInfo[key];
             //console.log(day);
 
             for(let hour in day){
-                let event = day[hour];
-                let table = document.querySelector(`#${this.tableId}`),
-                    currentTD = table.querySelector(`td[data-id=${key}-${hour}]`);
+                let event = day[hour],
+                    current_TD = table.querySelector(`td[data-id=${key}-${hour}]`);
 
-                currentTD.append(this.renderEvent(event));
+                if(event !== null){
+                    current_TD.innerHTML = Calendar.renderEvent(event,calendar);
+                }
             }
         }
     }
