@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>add Event</title>
+	<style>
+		form{
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+			width: 300px;
+			border: 1px solid black;
+			padding: 10px;
+			box-sizing: border-box;
+		}
+		form label{
+			margin-bottom: 10px;
+		}
+		button{
+			background: powderblue;
+		}
+	</style>
+</head>
+<body>
+	<form id="addEvent">
+		<label>
+			Meeting name:
+			<input type="text" id="name" required>
+		</label>
+		<label>
+			Meeting users:
+			<select id="users" multiple required>
+				<option value="Jack">Jack</option>
+				<option value="Anna">Anna</option>
+				<option value="Orange">Orange</option>
+				<option value="Apple">Apple</option>
+			</select>
+		</label>
+		<label>
+			Meeting day:
+			<select id="day" required>
+				<option value="monday">monday</option>
+				<option value="tuesday">tuesday</option>
+				<option value="wednesday">wednesday</option>
+				<option value="thursday">thursday</option>
+				<option value="friday">friday</option>
+			</select>
+		</label>
+		<label>
+			Meeting hour:
+			<select id="hour" required>
+				<option value="10">10</option>
+				<option value="11">11</option>
+				<option value="12">12</option>
+				<option value="13">13</option>
+				<option value="14">14</option>
+				<option value="15">15</option>
+				<option value="16">16</option>
+				<option value="17">17</option>
+				<option value="18">18</option>
+			</select>
+		</label>
+		<button>Add event</button>
+	</form>
+
+	<script src="form.js"></script>
+</body>
+</html>
