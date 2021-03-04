@@ -236,6 +236,14 @@ let calendarsData = {
     //     }
     // }
 }
+for(let calendar in calendars){
+    calendars[calendar].data = calendarsData[calendar];
+    calendars[calendar].render_Calendar();
+    Calendar.infoCalendar(calendars[calendar]);
+    //console.log(calendars[calendar]);
+}
+
+//console.log(calendars);
 
 let cancelBTNs = document.querySelectorAll('.event__cancel');
 
